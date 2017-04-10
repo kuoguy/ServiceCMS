@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Service CMS</string>
+    <string name="title_activity_main">Main Menu</string>
+    <string name="main_menu_item1">Add</string>
+    <string name="recipe_item_add">Add Item</string>
+    <string name="recipe_item_back">Back</string>
+    <string name="recipe_search">Enter Name</string>
+    <string name="recipe_search_button">Find Recipe</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="recipe_new">New Recipe</string>
+    <string name="action_settings">Settings</string>
+</resources>

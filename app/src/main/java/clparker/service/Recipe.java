@@ -123,15 +123,15 @@ public class Recipe {
     private String recipe_id;
     public String getRecipe_id(){return recipe_id;}
 
-    public String getRecipe_category() {
-        return recipe_category;
+    public String getRecipe_subcategory() {
+        return recipe_subcategory;
     }
 
-    public void setRecipe_category(String recipe_category) {
-        this.recipe_category = recipe_category;
+    public void setRecipe_subcategory(String recipe_category) {
+        this.recipe_subcategory = recipe_category;
     }
 
-    private String recipe_category;
+    private String recipe_subcategory;
 
     public Item getItem(int count) //finds item using id in items array
     {

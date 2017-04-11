@@ -273,7 +273,7 @@ public class CloudDBConnector {
         MobileServiceJsonTable recipeTable = mClient.getTable("Recipe");
         JsonObject recipeObject = new JsonObject();
         recipeObject.addProperty("name", newRecipe.getName());
-        recipeObject.addProperty("recipe_category", newRecipe.getRecipe_category());
+        recipeObject.addProperty("recipe_subcategory", newRecipe.getRecipe_subcategory());
         recipeObject.addProperty("id", newRecipe.getId());
         recipeObject.addProperty("recipe_id", newRecipe.getRecipe_id());
         try
@@ -349,6 +349,23 @@ public class CloudDBConnector {
         return catList;
 
     }
+
+    List<Recipe_SubCategory> getRecipeSubCategories(MobileServiceClient mClient)
+    {
+        List<Recipe_SubCategory> catList;
+        try {
+            catList = mClient.getTable(Recipe_SubCategory.class).execute().get();
+        }
+        catch(Exception e)
+        {
+            catList=null;
+            Log.d("CloudDBConnector", "getRecipeCat failed: "+e.getMessage());
+        }
+
+        return catList;
+
+    }
+
 
     List<Recipe_SubCategory> getRecipeSubCategoriesOfCategory(MobileServiceClient mClient, Recipe_Category parent)
     {

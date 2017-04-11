@@ -38,6 +38,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     int global_selectedListNav = 0;
     ArrayList<String> selectedChain = new ArrayList<>();
+    ArrayList<Recipe_SubCategory> recipeSubCategoryArrayList = new ArrayList<>();
+    ArrayAdapter<Recipe_SubCategory> recipeSubCategoryArrayAdapter;
 
     Recipe global_recipeSelected;
 
@@ -136,6 +138,7 @@ public class RecipeActivity extends AppCompatActivity {
                 //recipeName[0]=recipeNameTV.getText().toString();
                 Recipe[] recipeParam = new Recipe[1];
                 recipeParam[0]=global_recipeSelected;
+                recipeParam[0].setRecipe_subcategory("Burger");
                 SetRecipeLinesTask setRecipeLinesTask = new SetRecipeLinesTask();
                 setRecipeLinesTask.execute(recipeParam); //Passes parameter containing name
                 return true;
@@ -156,6 +159,10 @@ public class RecipeActivity extends AppCompatActivity {
         recipeArrayAdapter=new RecipeAdapter(getActivity(), 0, itemHandler.getRecipeLines(recipeNumber));
         listView.setAdapter(recipeArrayAdapter);
         recipeArrayAdapter.notifyDataSetChanged();
+    }
+    public void initialiseAdapterSubCat()
+    {
+        //recipeSubCategoryArrayAdapter=new RecipeSubCategoryAdapter(getActivity(), 0, itemHandler.getRecipeSubCategoryList());
     }
 
     AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
@@ -441,6 +448,23 @@ public class RecipeActivity extends AppCompatActivity {
             itemHandler.grabItems(result);
             populateWithItems(itemHandler.getItemsOfSubCategory(global_subCategorySelected));
         }
+    }
+
+    private class GetRecipeSubCategoriesTask extends AsyncTask<Boolean, Object, List<Recipe_SubCategory>>
+    {
+        @Override
+        protected List<Recipe_SubCategory> doInBackground(Boolean...params)
+        {
+            return cdbConnector.getRecipeSubCategories(mClient);
+        }
+
+        @Override
+        protected void onPostExecute(List<Recipe_SubCategory> result)
+        {
+            itemHandler.grabRecipeSubCategories(result);
+            //populateStringList(itemHandlerLists.getRecipeCategoryList());
+        }
+
     }
 
     private class SetRecipeLinesTask extends AsyncTask<Recipe, Object, Boolean>

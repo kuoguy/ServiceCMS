@@ -30,9 +30,9 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/textViewDescription"
         android:layout_alignBottom="@+id/menuItemIcon"
         android:layout_alignLeft="@+id/textViewName"
-        android:layout_alignStart="@+id/textViewName"
-        android:id="@+id/textViewDescription" />
+        android:layout_alignStart="@+id/textViewName" />
 
 </RelativeLayout>

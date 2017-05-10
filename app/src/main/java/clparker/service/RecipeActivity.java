@@ -38,10 +38,14 @@ public class RecipeActivity extends AppCompatActivity {
 
     int global_selectedListNav = 0;
     ArrayList<String> selectedChain = new ArrayList<>();
-    ArrayList<Recipe_SubCategory> recipeSubCategoryArrayList = new ArrayList<>();
-    ArrayAdapter<Recipe_SubCategory> recipeSubCategoryArrayAdapter;
+    ArrayList<Recipe_SubCategory> subcategoryArrayList = new ArrayList<>();
+    ArrayAdapter<Recipe_SubCategory> subcategoryAdapter;
+
+    boolean recipesubcategorytime=false;
 
     Recipe global_recipeSelected;
+
+
 
     public void populateWithCategory()
     {
@@ -136,11 +140,15 @@ public class RecipeActivity extends AppCompatActivity {
                 //TextView recipeNameTV = (TextView) findViewById(R.id.editTextRecipeName);
                 //String[] recipeName = new String[1]; // contains recipe name from onscreen editText
                 //recipeName[0]=recipeNameTV.getText().toString();
+                GetRecipeSubCategoriesTask getRecipeSubCategoriesTask = new GetRecipeSubCategoriesTask();
+                getRecipeSubCategoriesTask.execute();
+                /*
                 Recipe[] recipeParam = new Recipe[1];
                 recipeParam[0]=global_recipeSelected;
                 recipeParam[0].setRecipe_subcategory("Burger");
                 SetRecipeLinesTask setRecipeLinesTask = new SetRecipeLinesTask();
                 setRecipeLinesTask.execute(recipeParam); //Passes parameter containing name
+                */
                 return true;
             case R.id.action_home:
                 Intent intent = new Intent(this, MainActivity.class);
@@ -152,6 +160,14 @@ public class RecipeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public void switchToRecipeSubcategory()
+    {
+        subcategoryArrayList=itemHandler.getRecipeSubCategoryList();
+        subcategoryAdapter=new RecipeSubCategoryAdapter(getActivity(), 0, subcategoryArrayList);
+        listViewItems.setAdapter(subcategoryAdapter);
+        subcategoryAdapter.notifyDataSetChanged();
     }
 
     public void initialiseAdapter(int recipeNumber) //Initialises listview adapter
@@ -173,7 +189,16 @@ public class RecipeActivity extends AppCompatActivity {
             //itemSelectedID=position;
 
             //If the categories listview is clicked
-            if (getResources().getResourceEntryName(parent.getId()).equals("listViewItems") && global_selectedListNav==0)
+            if(getResources().getResourceEntryName(parent.getId()).equals("listViewItems") && recipesubcategorytime)
+            {
+                global_recipeSelected.setRecipe_subcategory(subcategoryArrayList.get(position).getName());
+                Recipe[] recipeParam = new Recipe[1];
+                recipeParam[0]=global_recipeSelected;
+                //recipeParam[0].setRecipe_subcategory("Burger");
+                SetRecipeLinesTask setRecipeLinesTask = new SetRecipeLinesTask();
+                setRecipeLinesTask.execute(recipeParam); //Passes parameter containing name
+            }
+            else if (getResources().getResourceEntryName(parent.getId()).equals("listViewItems") && global_selectedListNav==0)
             {
                 if(selectedChain.size()<1)
                 {
@@ -210,6 +235,7 @@ public class RecipeActivity extends AppCompatActivity {
                 }
 
             }
+
         }
     };
 
@@ -462,6 +488,8 @@ public class RecipeActivity extends AppCompatActivity {
         protected void onPostExecute(List<Recipe_SubCategory> result)
         {
             itemHandler.grabRecipeSubCategories(result);
+            recipesubcategorytime=true;
+            switchToRecipeSubcategory();
             //populateStringList(itemHandlerLists.getRecipeCategoryList());
         }
 

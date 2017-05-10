@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -14,11 +15,12 @@ import java.util.ArrayList;
  * Created by Clown on 11/04/2017.
  */
 
-public class RecipeSubCategoryAdapter extends BaseAdapter {
+public class RecipeSubCategoryAdapter extends ArrayAdapter {
     private Context context;
     private ArrayList<Recipe_SubCategory> items;
 
     public RecipeSubCategoryAdapter(Context context, int resource, ArrayList<Recipe_SubCategory> objects) {
+        super(context, resource, objects);
         this.context=context;
         this.items=objects;
     }
@@ -39,16 +41,16 @@ public class RecipeSubCategoryAdapter extends BaseAdapter {
     {
         Recipe_SubCategory itemObj=items.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.recipelist, null);
+        View view = inflater.inflate(R.layout.recipesubcats, null);
 
-        TextView t1 = (TextView) view.findViewById(R.id.textView4);
-        TextView t2 = (TextView) view.findViewById(R.id.textView1);
+        TextView t1 = (TextView) view.findViewById(R.id.textView1);
+        //TextView t2 = (TextView) view.findViewById(R.id.textView1);
 
         String nameString = itemObj.getName();
-        String idString = itemObj.getId();
+        //String idString = itemObj.getId();
 
         t1.setText(nameString);
-        t2.setText(idString);
+        //t2.setText(idString);
 
         return view;
     }
